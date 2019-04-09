@@ -1,0 +1,16 @@
+{
+  "name": "discord-testbot",
+  "version": "1.0.0",
+  "description": "My little test bot for my discord server",
+  "main": "src/js/index.js",
+  "dependencies": {
+    "@types/node": "^11.13.2",
+    "discord.js": "^11.4.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Darxoon",
+  "license": "GNU GPLv3"
+}

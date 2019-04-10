@@ -1,4 +1,7 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var path_1 = require("path");
+var fs_1 = require("fs");
 /*
  * Data class needs:
  *      - Create (write new file)
@@ -17,6 +20,8 @@ var Data;
 (function (Data) {
     // directory: string, name: string, content: any, callback: (error) => void
     function create(directory, name, content, callback) {
+        var filename = path_1.join(__dirname, '../../data/', directory, name + '.json');
+        fs_1.writeFile(filename, JSON.stringify(content, null, '\t'), callback);
     }
     Data.create = create;
-})(Data || (Data = {}));
+})(Data = exports.Data || (exports.Data = {}));

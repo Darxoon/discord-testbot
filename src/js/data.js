@@ -49,4 +49,16 @@ var Data;
         });
     }
     Data.deleteData = deleteData;
+    // directory 
+    // : void|error 
+    function mkDir(directory) {
+        const filename = path_1.join(__dirname, '../../data/', directory);
+        fs_1.mkdir(filename, (err) => {
+            if (err)
+                return err;
+            else
+                return;
+        });
+    }
+    Data.mkDir = mkDir;
 })(Data = exports.Data || (exports.Data = {}));

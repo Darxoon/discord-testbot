@@ -1,5 +1,5 @@
 import { join } from "path";
-import { writeFile, readFile, truncate, Dirent, unlink } from "fs";
+import { writeFile, readFile, truncate, Dirent, unlink, mkdir } from "fs";
 import { BotUtil } from "./util";
 
 /*
@@ -44,6 +44,18 @@ export namespace Data {
         const filename: string = join(__dirname, '../../data/', directory, name + '.json');
         unlink(filename, (err: NodeJS.ErrnoException) => {
             if(err) 
+                return err; 
+            else 
+                return;
+        })
+    } 
+
+    // directory 
+    // : void|error 
+    export function mkDir(directory: string): void|NodeJS.ErrnoException {
+        const filename = join(__dirname, '../../data/', directory);
+        mkdir(filename, (err: NodeJS.ErrnoException) => {
+            if(err)
                 return err; 
             else 
                 return;

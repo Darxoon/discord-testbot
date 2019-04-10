@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var path_1 = require("path");
-var fs_1 = require("fs");
+const path_1 = require("path");
+const fs_1 = require("fs");
+const util_1 = require("./util");
 /*
  * Data class needs:
  *      - Create (write new file)
@@ -19,9 +20,33 @@ var fs_1 = require("fs");
 var Data;
 (function (Data) {
     // directory: string, name: string, content: any, callback: (error) => void
-    function create(directory, name, content, callback) {
-        var filename = path_1.join(__dirname, '../../data/', directory, name + '.json');
+    // : void
+    function writeData(directory, name, content, callback) {
+        const filename = path_1.join(__dirname, '../../data/', directory, name + '.json');
         fs_1.writeFile(filename, JSON.stringify(content, null, '\t'), callback);
     }
-    Data.create = create;
+    Data.writeData = writeData;
+    // directory: string, name: string 
+    // : any
+    function readData(directory, name) {
+        const filename = path_1.join(__dirname, '../../data/', directory, name + '.json');
+        fs_1.readFile(filename, 'utf8', (err, data) => {
+            if (err)
+                return null;
+            return util_1.BotUtil.TryParseJSON(data);
+        });
+    }
+    Data.readData = readData;
+    // directory, name 
+    // : void|error 
+    function deleteData(directory, name) {
+        const filename = path_1.join(__dirname, '../../data/', directory, name + '.json');
+        fs_1.unlink(filename, (err) => {
+            if (err)
+                return err;
+            else
+                return;
+        });
+    }
+    Data.deleteData = deleteData;
 })(Data = exports.Data || (exports.Data = {}));

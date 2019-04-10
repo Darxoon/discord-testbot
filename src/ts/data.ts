@@ -1,5 +1,6 @@
 import { join } from "path";
-import { writeFile } from "fs";
+import { writeFile, readFile, truncate, Dirent, unlink } from "fs";
+import { BotUtil } from "./util";
 
 /*
  * Data class needs: 
@@ -19,11 +20,34 @@ import { writeFile } from "fs";
 export namespace Data {
 
     // directory: string, name: string, content: any, callback: (error) => void
-    export function create(directory: string, name: string, content: any, callback: (err: NodeJS.ErrnoException) => void): void {
-
-        const filename = join(__dirname, '../../data/', directory, name + '.json');
+    // : void
+    export function writeData(directory: string, name: string, content: any, callback: (err: NodeJS.ErrnoException) => void): void {
+        const filename: string = join(__dirname, '../../data/', directory, name + '.json');
         writeFile(filename, JSON.stringify(content, null, '\t'), callback);
 
+    } 
+
+    // directory: string, name: string 
+    // : any
+    export function readData(directory: string, name: string): any {
+        const filename: string = join(__dirname, '../../data/', directory, name + '.json');
+        readFile(filename, 'utf8', (err: NodeJS.ErrnoException, data: string) => {
+            if(err)
+                return null;
+            return BotUtil.TryParseJSON(data);
+        })
+    } 
+
+    // directory, name 
+    // : void|error 
+    export function deleteData(directory: string, name: string): void|NodeJS.ErrnoException {
+        const filename: string = join(__dirname, '../../data/', directory, name + '.json');
+        unlink(filename, (err: NodeJS.ErrnoException) => {
+            if(err) 
+                return err; 
+            else 
+                return;
+        })
     }
 
 }

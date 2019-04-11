@@ -29,7 +29,19 @@ export class Bot {
                     guild   = msg.guild; 
             
             if(author.id !== client.user.id && content === '?createserver') {
-                
+                msg.channel.send("was added lol" + guild.id); 
+                Data.mkDir('servers/' + guild.id); 
+                Data.readData('presets', 'options', (err: NodeJS.ErrnoException, data: any) => {
+                    Data.writeData('servers/' + guild.id, 'options', data, (err: NodeJS.ErrnoException) => {
+                        if(err) throw err;
+                    })    
+                })
+                Data.readData('presets', 'commands', (err: NodeJS.ErrnoException, data: any) => {
+                    Data.writeData('servers/' + guild.id, 'commands', data, (err: NodeJS.ErrnoException) => {
+                        if(err) throw err;
+                    })    
+                })
+                Data.mkDir(`servers/${guild.id}/commands`)
             }
 
             if(author.id !== client.user.id && content.startsWith(this.config.standardPrefix)) {

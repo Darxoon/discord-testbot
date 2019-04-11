@@ -28,7 +28,18 @@ var Data;
     Data.writeData = writeData;
     // directory: string, name: string 
     // : any
-    function readData(directory, name) {
+    function readData(directory, name, callback) {
+        const filename = path_1.join(__dirname, '../../data/', directory, name + '.json');
+        fs_1.readFile(filename, 'utf8', (err, data) => {
+            if (err)
+                return callback(err, null);
+            return callback(err, util_1.BotUtil.TryParseJSON(data));
+        });
+    }
+    Data.readData = readData;
+    // directory: string, name: string 
+    // : any
+    function readDataSync(directory, name) {
         const filename = path_1.join(__dirname, '../../data/', directory, name + '.json');
         fs_1.readFile(filename, 'utf8', (err, data) => {
             if (err)
@@ -36,7 +47,7 @@ var Data;
             return util_1.BotUtil.TryParseJSON(data);
         });
     }
-    Data.readData = readData;
+    Data.readDataSync = readDataSync;
     // directory, name 
     // : void|error 
     function deleteData(directory, name) {

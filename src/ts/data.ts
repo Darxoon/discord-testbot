@@ -29,7 +29,18 @@ export namespace Data {
 
     // directory: string, name: string 
     // : any
-    export function readData(directory: string, name: string): any {
+    export function readData(directory: string, name: string, callback: (err: NodeJS.ErrnoException, data: any) => void): void {
+        const filename: string = join(__dirname, '../../data/', directory, name + '.json');
+        readFile(filename, 'utf8', (err: NodeJS.ErrnoException, data: string) => {
+            if(err)
+                return callback(err, null);
+            return callback(err, BotUtil.TryParseJSON(data));
+        })
+    }
+
+    // directory: string, name: string 
+    // : any
+    export function readDataSync(directory: string, name: string): any {
         const filename: string = join(__dirname, '../../data/', directory, name + '.json');
         readFile(filename, 'utf8', (err: NodeJS.ErrnoException, data: string) => {
             if(err)
@@ -37,6 +48,7 @@ export namespace Data {
             return BotUtil.TryParseJSON(data);
         })
     } 
+
 
     // directory, name 
     // : void|error 

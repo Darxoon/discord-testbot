@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 require("discord.js");
 const discord_js_1 = require("discord.js");
 const fs_1 = require("fs");
+const data_1 = require("./data");
 class Bot {
     static start() {
         this.loadConfig();
@@ -15,6 +16,21 @@ class Bot {
         client.on('message', (msg) => {
             const content = msg.content, author = msg.author, channel = msg.channel, guild = msg.guild;
             if (author.id !== client.user.id && content === '?createserver') {
+                msg.channel.send("was added lol" + guild.id);
+                data_1.Data.mkDir('servers/' + guild.id);
+                data_1.Data.readData('presets', 'options', (err, data) => {
+                    data_1.Data.writeData('servers/' + guild.id, 'options', data, (err) => {
+                        if (err)
+                            throw err;
+                    });
+                });
+                data_1.Data.readData('presets', 'commands', (err, data) => {
+                    data_1.Data.writeData('servers/' + guild.id, 'commands', data, (err) => {
+                        if (err)
+                            throw err;
+                    });
+                });
+                data_1.Data.mkDir(`servers/${guild.id}/commands`);
             }
             if (author.id !== client.user.id && content.startsWith(this.config.standardPrefix)) {
                 console.log(`Command was used by @${author.tag}: ${content}`);

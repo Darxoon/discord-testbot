@@ -19,7 +19,6 @@ export class Bot {
         }); 
 
         client.on('guildCreate', (guild: Guild) => {
-            Data.create('asdf', 'asdf', {}, (error: any) => {})
         })
 
         client.on('message', (msg: Message) => {
@@ -29,15 +28,14 @@ export class Bot {
                     channel = msg.channel, 
                     guild   = msg.guild; 
             
+            if(author.id !== client.user.id && content === '?createserver') {
+                
+            }
+
             if(author.id !== client.user.id && content.startsWith(this.config.standardPrefix)) {
                 console.log(`Command was used by @${author.tag}: ${content}`);
                 
 
-                Data.create('test', 'config', this.config, (err: NodeJS.ErrnoException) => {
-                    if(err)
-                        console.error(err); 
-                    console.log('Config was saved!');
-                })
 
 
             }

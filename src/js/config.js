@@ -1,43 +1,19 @@
 "use strict";
-var Config = /** @class */ (function () {
-    function Config(owner, standardPrefix, secretToken) {
+class Config {
+    constructor(owner, standardPrefix, secretToken) {
         this._owner = owner;
         this._standardPrefix = standardPrefix;
         this._secret = new Config.ConfigSecret(secretToken);
     }
-    Object.defineProperty(Config.prototype, "owner", {
-        get: function () { return this._owner; },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(Config.prototype, "standardPrefix", {
-        get: function () { return this._standardPrefix; },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(Config.prototype, "secretToken", {
-        get: function () { return this._secret.token; },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(Config.prototype, "secret", {
-        get: function () { return this._secret; },
-        enumerable: true,
-        configurable: true
-    });
-    return Config;
-}());
+    get owner() { return this._owner; }
+    get standardPrefix() { return this._standardPrefix; }
+    get secretToken() { return this._secret.token; }
+    get secret() { return this._secret; }
+}
 (function (Config) {
-    var ConfigSecret = /** @class */ (function () {
-        function ConfigSecret(token) {
-            this._token = token;
-        }
-        Object.defineProperty(ConfigSecret.prototype, "token", {
-            get: function () { return this._token; },
-            enumerable: true,
-            configurable: true
-        });
-        return ConfigSecret;
-    }());
+    class ConfigSecret {
+        constructor(token) { this._token = token; }
+        get token() { return this._token; }
+    }
     Config.ConfigSecret = ConfigSecret;
 })(Config || (Config = {}));

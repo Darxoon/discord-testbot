@@ -18,7 +18,22 @@ export class Bot {
             console.log('Logged in as @' + client.user.tag);
         }); 
 
-        client.on('guildCreate', (guild: Guild) => {
+        client.on('guildCreate', (guild: Guild) => { 
+            // create directories
+            Data.mkDir('servers/' + guild.id); 
+            Data.mkDir(`servers/${guild.id}/commands`);
+            // copy options.json
+            Data.readData('presets', 'options', (err: NodeJS.ErrnoException, data: any) => {
+                Data.writeData('servers/' + guild.id, 'options', data, (err: NodeJS.ErrnoException) => {
+                    if(err) throw err;
+                })    
+            })
+            // copy commands.json
+            Data.readData('presets', 'commands', (err: NodeJS.ErrnoException, data: any) => {
+                Data.writeData('servers/' + guild.id, 'commands', data, (err: NodeJS.ErrnoException) => {
+                    if(err) throw err;
+                })    
+            })
         })
 
         client.on('message', (msg: Message) => {

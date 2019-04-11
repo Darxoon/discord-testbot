@@ -12,6 +12,23 @@ class Bot {
             console.log('Logged in as @' + client.user.tag);
         });
         client.on('guildCreate', (guild) => {
+            // create directories
+            data_1.Data.mkDir('servers/' + guild.id);
+            data_1.Data.mkDir(`servers/${guild.id}/commands`);
+            // copy options.json
+            data_1.Data.readData('presets', 'options', (err, data) => {
+                data_1.Data.writeData('servers/' + guild.id, 'options', data, (err) => {
+                    if (err)
+                        throw err;
+                });
+            });
+            // copy commands.json
+            data_1.Data.readData('presets', 'commands', (err, data) => {
+                data_1.Data.writeData('servers/' + guild.id, 'commands', data, (err) => {
+                    if (err)
+                        throw err;
+                });
+            });
         });
         client.on('message', (msg) => {
             const content = msg.content, author = msg.author, channel = msg.channel, guild = msg.guild;

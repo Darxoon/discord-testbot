@@ -1,0 +1,22 @@
+{
+    "commands": [
+        { "id": "say", "description": "Repeats the message", "args": ["message - the message to repeat"], "category": "fun", "permission": "everyone", "onlyInBotChannel": false }, 
+        { "id": "test", "description": "Logs the message into console", "args": "message - the message to log", "category": "debug", "permission": "dev", "onlyInBotChannel": true }
+    ], 
+    "groups": [
+        {
+            "permission": "admin", 
+            "id": "admin",  
+            "commands": [], 
+            "groups": []
+        }
+    ], 
+    "helpCategories": [
+        {
+            "permission": "everyone", 
+            "name": "fun", 
+            "description": "Fun little commands to toy around", 
+            "color": "black"
+        }
+    ]
+}
